@@ -40,3 +40,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 install prettier and eslint
 install prettier tailwindcss
+
+
+<!-- drizzle  --> 
+npx drizzle-kit generate
+npx drizzle-kit push
