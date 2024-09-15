@@ -4,7 +4,7 @@ import {
     pgEnum,
   } from "drizzle-orm/pg-core"
   
-  export const SkillLevelEnum = pgEnum("role", [
+  export const RoleEnum = pgEnum("role", [
     "Manager",
     "Admin",
   ]);
@@ -19,5 +19,5 @@ import {
     email: text("email").notNull(),
     image: text("image").default("no-image"),
     password: text("password"),
-    skillLevel: SkillLevelEnum("role").notNull().default("Manager"),
+    role: RoleEnum("role").notNull().default("Manager"),
   })

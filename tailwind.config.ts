@@ -9,6 +9,9 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+		backgroundImage: {
+			'formImage': "url('../public/form.jpg')",
+		  },
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

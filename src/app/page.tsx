@@ -1,8 +1,19 @@
+import { auth } from '@/server/auth';
+import { redirect } from 'next/navigation';
+import LogoutButton from '@/components/auth/logout-button';
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+
+  if (!session) {
+    redirect('/login');
+  }
   return (
-   <div>
-    asd
-   </div>
+    <div className="flex h-screen items-center justify-center">
+      <div>
+        <h1>Authenticated</h1>
+        <LogoutButton />
+      </div>
+    </div>
   );
 }
