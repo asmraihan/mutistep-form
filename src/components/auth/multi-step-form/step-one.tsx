@@ -1,52 +1,41 @@
-"use client";
+'use client';
 
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 type StepOneProps = {
   onNext: (values: z.infer<typeof firstStepSchema>) => void;
+  formData: z.infer<typeof firstStepSchema>;
 };
 
 export const firstStepSchema = z.object({
   email: z.string().email(),
-  firstName: z.string(),
-  location: z.string(),
-  lastName: z.string(),
+  firstName: z.string().min(1, "First name cannot be empty"),
+  location: z.string().min(1, "Location cannot be empty"),
+  lastName: z.string().min(1, "Last name cannot be empty"),
 });
 
-const StepOne = ({ onNext }: StepOneProps) => {
+const StepOne = ({ onNext, formData }: StepOneProps) => {
   const form = useForm<z.infer<typeof firstStepSchema>>({
     resolver: zodResolver(firstStepSchema),
+    defaultValues: formData,
   });
 
-  const onSubmit = (
-    values: z.infer<typeof firstStepSchema>
-  ) => {
+  const onSubmit = (values: z.infer<typeof firstStepSchema>) => {
     onNext(values);
   };
   return (
     <div>
-      <h3 className="text-3xl from-bold">
-        Register for an account
-      </h3>
-      <p className="text-gray-500 text-sm mt-3">
-        👋 Let's start with a little bit of information
-      </p>
+      <h3 className="from-bold text-3xl">Register for an account</h3>
+      <p className="mt-3 text-sm text-gray-500">👋 Let's start with a little bit of information</p>
       <div className="mt-10">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="grid grid-cols-2 gap-10 mb-5">
+            <div className="mb-5 grid grid-cols-2 gap-10">
               <FormField
                 control={form.control}
                 name="firstName"
@@ -54,11 +43,7 @@ const StepOne = ({ onNext }: StepOneProps) => {
                   <FormItem>
                     <FormLabel>First Name:</FormLabel>
                     <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Enter first name here"
-                        type="text"
-                      />
+                      <Input {...field} placeholder="Enter first name here" type="text" />
                     </FormControl>
                   </FormItem>
                 )}
@@ -70,11 +55,7 @@ const StepOne = ({ onNext }: StepOneProps) => {
                   <FormItem>
                     <FormLabel>Last Name:</FormLabel>
                     <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Enter last name here"
-                        type="text"
-                      />
+                      <Input {...field} placeholder="Enter last name here" type="text" />
                     </FormControl>
                   </FormItem>
                 )}
@@ -87,11 +68,7 @@ const StepOne = ({ onNext }: StepOneProps) => {
                 <FormItem className="mb-5">
                   <FormLabel>Email:</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Enter email here"
-                      type="email"
-                    />
+                    <Input {...field} placeholder="Enter email here" type="email" />
                   </FormControl>
                 </FormItem>
               )}
@@ -103,11 +80,7 @@ const StepOne = ({ onNext }: StepOneProps) => {
                 <FormItem>
                   <FormLabel>Location:</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Enter location here"
-                      type="text"
-                    />
+                    <Input {...field} placeholder="Enter location here" type="text" />
                   </FormControl>
                 </FormItem>
               )}

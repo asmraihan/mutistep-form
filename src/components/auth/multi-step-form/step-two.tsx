@@ -32,11 +32,13 @@ const role = [
 interface StepTwoProps {
   onNext: (data: z.infer<typeof Step2Schema>) => void;
   onBack: () => void;
+  formData: z.infer<typeof Step2Schema>;
 }
 
-const StepTwo = ({ onNext, onBack }: StepTwoProps) => {
+const StepTwo = ({ onNext, onBack , formData}: StepTwoProps) => {
   const form = useForm<z.infer<typeof Step2Schema>>({
     resolver: zodResolver(Step2Schema),
+    defaultValues : formData,
   });
 
   const onSubmit = (

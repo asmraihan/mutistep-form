@@ -1,27 +1,28 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 
-import StepOne from "./step-one";
-import { Progress } from "@/components/ui/progress";
-import StepTwo from "./step-two";
-import StepThree from "./step-three";
-import { useAction } from "next-safe-action/hooks";
-import { RegisterAccount } from "@/server/actions/register";
-import { useRouter } from "next/navigation";
-import { RegisterSchema } from "@/types/register-schema";
-import { z } from "zod";
-import Link from "next/link";
-import { toast } from "sonner";
+import StepOne from './step-one';
+import { Progress } from '@/components/ui/progress';
+import StepTwo from './step-two';
+import StepThree from './step-three';
+import { useAction } from 'next-safe-action/hooks';
+import { RegisterAccount } from '@/server/actions/register';
+import { useRouter } from 'next/navigation';
+import { RegisterSchema } from '@/types/register-schema';
+import { z } from 'zod';
+import Link from 'next/link';
+import { toast } from 'sonner';
 
 export default function MultiStepForm() {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    firstName: "",
-    location: "",
-    lastName: "",
+    firstName: '',
+    lastName: '',
+    email: '',
+    location: '',
+    role: '',
+    password: '',
   });
 
   const handleNextStep = (data: any) => {
@@ -38,13 +39,13 @@ export default function MultiStepForm() {
   const stepText = () => {
     switch (currentStep) {
       case 1:
-        return "Step 1 - Create Account";
+        return 'Step 1 - Create Account';
       case 2:
-        return "Step Two - Role Selection";
+        return 'Step Two - Role Selection';
       case 3:
-        return "Step Three - Create Password";
+        return 'Step Three - Create Password';
       default:
-        return "";
+        return '';
     }
   };
 
@@ -54,53 +55,33 @@ export default function MultiStepForm() {
     onSuccess(data) {
       if (data.data?.error) {
         toast(data.data.error);
-        router.push("/login");
+        router.push('/login');
       } else if (data.data?.success) {
         toast(data.data?.success);
-        router.push("/login");
+        router.push('/login');
       }
     },
   });
-  const finalSubmit = (
-    values: z.infer<typeof RegisterSchema>
-  ) => {
+  const finalSubmit = (values: z.infer<typeof RegisterSchema>) => {
     execute(values);
   };
 
   return (
-    <div className="w-2/3 p-8 flex flex-col">
+    <div className="flex w-2/3 flex-col p-8">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold mb-2">
-          {stepText()}
-        </h1>
+        <h1 className="mb-2 text-2xl font-bold">{stepText()}</h1>
         <Progress value={progressValue} className="h-2" />
       </div>
 
-      <div className="flex-grow flex flex-col justify-center max-w-md mx-auto w-full">
-        {currentStep === 1 && (
-          <StepOne onNext={handleNextStep} />
-        )}
-        {currentStep === 2 && (
-          <StepTwo
-            onNext={handleNextStep}
-            onBack={handlePreviousStep}
-          />
-        )}
-        {currentStep === 3 && (
-          <StepThree
-            onBack={handlePreviousStep}
-            handleSubmit={finalSubmit}
-            formData={formData}
-          />
-        )}
+      <div className="mx-auto flex w-full max-w-md flex-grow flex-col justify-center">
+        {currentStep === 1 && <StepOne onNext={handleNextStep} formData={formData} />}
+        {currentStep === 2 && <StepTwo onNext={handleNextStep} onBack={handlePreviousStep} formData={formData} />}
+        {currentStep === 3 && <StepThree onBack={handlePreviousStep} handleSubmit={finalSubmit} formData={formData} />}
       </div>
 
-      <p className="text-center text-gray-600 text-sm mt-6">
-        Already have an account?{" "}
-        <Link
-          href="/login"
-          className="text-blue-600 hover:underline"
-        >
+      <p className="mt-6 text-center text-sm text-gray-600">
+        Already have an account?{' '}
+        <Link href="/login" className="text-blue-600 hover:underline">
           Log In
         </Link>
       </p>
