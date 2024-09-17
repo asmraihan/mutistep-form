@@ -32,7 +32,7 @@ const role = [
 interface StepTwoProps {
   onNext: (data: z.infer<typeof Step2Schema>) => void;
   onBack: () => void;
-  formData: z.infer<typeof Step2Schema>;
+  formData: any;
 }
 
 const StepTwo = ({ onNext, onBack , formData}: StepTwoProps) => {
