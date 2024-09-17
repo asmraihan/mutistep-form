@@ -13,9 +13,9 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "npx tsx lib/db/migrate.ts",
     "db:studio": "drizzle-kit studio",
-    "postinstall" : "npx drizzle-kit generate"
-
+    "postinstall" : "npx drizzle-kit push"
   },
+  
   "dependencies": {
     "@auth/drizzle-adapter": "^1.4.2",
     "@hookform/resolvers": "^3.9.0",
